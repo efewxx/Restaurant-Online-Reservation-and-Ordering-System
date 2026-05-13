@@ -1,4 +1,4 @@
-# Restaurant-Online-Reservation-and-Ordering-System
+# Restaurant Online Reservation and Ordering System
 <img width="1168" height="784" alt="xmxX3" src="https://github.com/user-attachments/assets/ed9d8067-e114-4998-9d85-47782c0932a9" />
 
 
