@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS menu (
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
 );
 
---4. reservation table
+-- 4. reservation table
 CREATE TABLE IF NOT EXISTS reservation(
     reservation_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
