@@ -31,13 +31,17 @@ CREATE TABLE IF NOT EXISTS menu (
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
 );
 
---4. reservation table
+-- 4. reservation table
 CREATE TABLE IF NOT EXISTS reservation(
     reservation_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     reservation_date DATE NOT NULL,
     reservation_time TIME NOT NULL,
     number_of_people INT NOT NULL,
+    user_name TEXT NOT NULL,
+    user_surname TEXT NOT NULL,
+    user_phone INT NOT NULL,
+    user_description TEXT,
     status VARCHAR(20) DEFAULT 'pending',
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
