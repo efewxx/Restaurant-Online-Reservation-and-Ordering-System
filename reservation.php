@@ -1,4 +1,5 @@
 <?php 
+include 'check_login.php';
 // 1. Önce bağlantıyı kur
 include 'config/db.php'; 
 
