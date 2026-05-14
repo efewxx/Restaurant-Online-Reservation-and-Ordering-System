@@ -41,8 +41,11 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <title>Login - Restaurant System</title>
+    <link rel="stylesheet" href="../css/login_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+      
     <form action="login.php" method="post" onsubmit="return validateLogin()">
         <h2>Login</h2>
         <input type="email" name="email" id="email" placeholder="E-posta" required>

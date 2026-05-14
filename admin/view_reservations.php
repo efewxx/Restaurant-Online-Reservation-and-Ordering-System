@@ -91,7 +91,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <div>
         <a href="dashboard.php">Panel</a>
         <a href="../index.php" target="_blank">Siteyi Gör</a>
-        <a href="../logout.php" style="color: #ff6b6b;">Çıkış Yap</a>
+        <a href="../logout.php" style="color: #ff6b6b;">Çikiş Yap</a>
     </div>
 </nav>
 
