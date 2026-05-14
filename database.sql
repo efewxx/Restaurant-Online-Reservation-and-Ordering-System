@@ -38,6 +38,10 @@ CREATE TABLE IF NOT EXISTS reservation(
     reservation_date DATE NOT NULL,
     reservation_time TIME NOT NULL,
     number_of_people INT NOT NULL,
+    user_name TEXT NOT NULL,
+    user_surname TEXT NOT NULL,
+    user_phone INT NOT NULL,
+    user_description TEXT,
     status VARCHAR(20) DEFAULT 'pending',
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
