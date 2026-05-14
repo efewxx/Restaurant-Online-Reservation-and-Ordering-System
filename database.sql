@@ -54,5 +54,37 @@ INSERT INTO users (name, email, password, role) VALUES
 
 INSERT INTO categories (category_name) VALUES ('main courses'), ('Drinks'), ('Desserts');
 INSERT INTO menu (product_name, Price, description, category_id, user_id) 
-VALUES ('meatballs', 450.00, 'Delicious meatballs with special sauce', 1, (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
+VALUES ('meatbaLLls', 450.00, 'Delicious meatballs with special sauce', 1, (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
+
+-- Önce karmaşayı temizleyelim (Sadece menüyü temizliyoruz)
+DELETE FROM menu WHERE product_name != 'meatbaLLls';
+
+-- MAIN COURSES (Otomatik Kategori Bulucu ile)
+INSERT INTO menu (product_name, Price, description, category_id, user_id) VALUES 
+('Grilled Ribeye Steak', 550.00, 'Served with roasted vegetables and mashed potatoes.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Classic Cheeseburger', 280.00, '100% beef patty, cheddar cheese, and fries.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Fettuccine Alfredo', 310.00, 'Creamy alfredo sauce with grilled chicken breast.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Salmon Fillet', 480.00, 'Pan-seared salmon with lemon butter sauce.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Margherita Pizza', 260.00, 'Fresh mozzarella, tomato sauce, and basil.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Chicken Caesar Salad', 240.00, 'Crispy lettuce, croutons, and grilled chicken.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Lamb Chops', 520.00, 'Grilled lamb chops with herb-roasted potatoes.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Mushroom Risotto', 290.00, 'Arborio rice cooked with wild mushrooms.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Spicy Beef Tacos', 270.00, 'Three soft tacos with spicy beef and lime.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Vegetarian Lasagna', 280.00, 'Layers of pasta with seasonal vegetables.', (SELECT category_id FROM categories WHERE category_name LIKE '%main%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
+
+-- DRINKS
+INSERT INTO menu (product_name, Price, description, category_id, user_id) VALUES 
+('Fresh Orange Juice', 95.00, '100% natural orange juice.', (SELECT category_id FROM categories WHERE category_name LIKE '%Drink%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Iced Caramel Macchiato', 110.00, 'Espresso with cold milk and caramel.', (SELECT category_id FROM categories WHERE category_name LIKE '%Drink%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Sparkling Water', 40.00, '500ml natural mineral water.', (SELECT category_id FROM categories WHERE category_name LIKE '%Drink%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Mint Lemonade', 85.00, 'Homemade lemonade with fresh mint.', (SELECT category_id FROM categories WHERE category_name LIKE '%Drink%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Hot Chocolate', 90.00, 'Rich dark chocolate melted with milk.', (SELECT category_id FROM categories WHERE category_name LIKE '%Drink%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
+
+-- DESSERTS
+INSERT INTO menu (product_name, Price, description, category_id, user_id) VALUES 
+('New York Cheesecake', 180.00, 'Creamy cheesecake with strawberry glaze.', (SELECT category_id FROM categories WHERE category_name LIKE '%Dessert%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Chocolate Lava Cake', 190.00, 'Warm chocolate cake with molten center.', (SELECT category_id FROM categories WHERE category_name LIKE '%Dessert%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Tiramisu', 170.00, 'Italian espresso-soaked ladyfingers.', (SELECT category_id FROM categories WHERE category_name LIKE '%Dessert%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Apple Pie', 150.00, 'Traditional apple pie with ice cream.', (SELECT category_id FROM categories WHERE category_name LIKE '%Dessert%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+('Baklava Selection', 210.00, 'Traditional pastry with pistachios.', (SELECT category_id FROM categories WHERE category_name LIKE '%Dessert%' LIMIT 1), (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
 
