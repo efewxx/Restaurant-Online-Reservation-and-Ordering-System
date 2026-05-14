@@ -53,3 +53,6 @@ INSERT INTO users (name, email, password, role) VALUES
 ('Sistem Yöneticisi', 'admin@tracker.com', '$2y$10$YGo9LpxZ7f1Fp.v0G7aE2u2F1uW1u1u1u1u1u1u1u1u1u1u1', 'admin');
 
 INSERT INTO categories (category_name) VALUES ('main courses'), ('Drinks'), ('Desserts');
+INSERT INTO menu (product_name, Price, description, category_id, user_id) 
+VALUES ('meatballs', 450.00, 'Delicious meatballs with special sauce', 1, (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
+
