@@ -51,3 +51,5 @@ CREATE TABLE IF NOT EXISTS reservation(
 -- Not: Şifreleme (password_hash) PHP tarafında yapılacaktır.
 INSERT INTO users (name, email, password, role) VALUES 
 ('Sistem Yöneticisi', 'admin@tracker.com', '$2y$10$YGo9LpxZ7f1Fp.v0G7aE2u2F1uW1u1u1u1u1u1u1u1u1u1u1', 'admin');
+
+INSERT INTO categories (category_name) VALUES ('main courses'), ('Drinks'), ('Desserts');
