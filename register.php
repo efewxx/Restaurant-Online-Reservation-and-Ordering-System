@@ -2,6 +2,7 @@
 // 1. ADIM: Efe'nin hazırladığı veritabanı bağlantısını çağırıyoruz
 include 'config/db.php'; 
 
+
 if (isset($_POST['signup'])) {
     // Formdan gelen verileri alıyoruz
     $name = $_POST['name'];
@@ -35,28 +36,40 @@ if (isset($_POST['signup'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration </title>
+    <link rel="stylesheet" href="css/login_style.css">
 </head>
 <body>
-    <div>
-        <form action="register.php" method="post">
-            <div class="container"></div>
+   <div class="main-container">
+    <div class="left-side">
+        <div class="overlay">
+            <h1>Join Us</h1>
+            <p>Register with our restaurant system and enjoy the privileges..</p>
+        </div>
+        <img src="./images/restaurantview.gif" alt="Restaurant GIF">
+    </div>
 
-            <label for="name"><b>Name</b></label>
-            <input type="text" name="name" required>
-            <br><br>
-            <label for="email"><b>Email</b></label>
-            <input type="email" name="email" required>
-            <br><br>
-            <label for="password"><b>Password</b></label>
-            <input type="password" name="password" required>
-            <br><br>
-            <label for="password"><b>Confirm Password</b></label>
-            <input type="password" name="confirmpassword" required>
-            <br><br>
-            <input type="submit" name="signup" value="Sign Up">
-
-        </form>
-    </div>   
+    <div class="right-side">
+        <div class="form-box">
+            <h2>Create Account</h2>
+            <form action="register.php" method="post">
+                <div class="input-group">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
+                </div>
+                <input type="submit" name="signup" value="SIGN UP" class="btn">
+                <p class="switch-text">Already have an account? <a href="login.php">Login Here</a></p>
+            </form>
+        </div>
+    </div>
+</div>
     
 </body>
 </html>

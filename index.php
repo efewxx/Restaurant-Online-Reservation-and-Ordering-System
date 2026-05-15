@@ -5,13 +5,13 @@ include 'includes/header.php';
 ?>
 
 <header class="index-hero">
-    <h1 style="font-size: 3rem; color: white;">Şehrin En İyi Lezzetleri Sizi Bekliyor</h1>
-    <p style="font-size: 1.2rem; margin-top: 10px;">Kaliteli malzemeler, usta şefler.</p>
+    <h1 style="font-size: 3rem; color: white;">The City's Best Flavors Await You</h1>
+    <p style="font-size: 1.2rem; margin-top: 10px;">High-quality ingredients, expert chefs.</p>
 </header>
 
 <div class="menu-section">
     <div class="admin-container">
-        <h2 style="text-align: center; margin-bottom: 40px;">🍴 Lezzet Menümüz</h2>
+        <h2 style="text-align: center; margin-bottom: 40px;">🍴 Our Delicious Menu</h2>
         
         <div class="dashboard-grid">
             <?php
@@ -35,7 +35,7 @@ include 'includes/header.php';
                                 
                                 <a href="order_process.php?id=<?php echo $row['product_id']; ?>" 
                                    class="btn btn-primary" style="background-color: #ff9800;">
-                                    Siparişe Ekle
+                                    Add to Order
                                 </a>
                             </div>
                         </div>
@@ -43,7 +43,7 @@ include 'includes/header.php';
                     <?php
                 }
             } else {
-                echo "<p style='text-align:center;'>Menü henüz boş.</p>";
+                echo "<p style='text-align:center;'>The menu is still empty.</p>";
             }
             ?>
         </div>

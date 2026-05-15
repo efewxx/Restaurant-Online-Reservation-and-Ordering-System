@@ -8,8 +8,8 @@ include 'includes/header.php';
     <h1>Sipariş Özetiniz</h1>
     <table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">
         <tr>
-            <th>Ürün Adı</th>
-            <th>Fiyat</th>
+            <th>Food Name</th>
+            <th>Price</th>
         </tr>
         <?php
         $total = 0;

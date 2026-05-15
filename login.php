@@ -2,6 +2,7 @@
 session_start(); // Oturumu başlatıyoruz
 include 'config/db.php'; 
 
+
 if (isset($_POST['login'])) {
     // Formdan gelen veriler
     $email = $_POST['email'];
@@ -41,21 +42,39 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <title>Login - Restaurant System</title>
-    <link rel="stylesheet" href="../css/login_style.css">
+    <link rel="stylesheet" href="./css/login_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
       
-    <form action="login.php" method="post" onsubmit="return validateLogin()">
-        <h2>Login</h2>
-        <input type="email" name="email" id="email" placeholder="E-posta" required>
-        <br><br>
-        <input type="password" name="password" id="password" placeholder="Şifre" required>
-        <br><br>
-        <input type="submit" name="login" value="Login">
-        <p>Don't have an account? <a href="register.php">Register</a></p>
-    </form>
+   <div class="main-container">
+    <div class="left-side">
+        <div class="overlay">
+            <h1>Welcome Back</h1>
+            <p>Continue enjoying delicious moments from where you left off..</p>
+        </div>
+        <img src="./images/restaurantview.gif" alt="Restaurant GIF">
+    </div>
+
+    <div class="right-side">
+        <div class="form-box">
+            <h2>User Login</h2>
+            <form action="login.php" method="post">
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <input type="submit" name="login" value="LOGIN" class="btn">
+                <p class="switch-text">Don't have an account? <a href="register.php">Register Now</a></p>
+            </form>
+        </div>
+    </div>
+</div>
     
     <script src="js/validation.js"></script>
+    
 </body>
+<?php include '/includes/footer.php'; ?>
 </html>
