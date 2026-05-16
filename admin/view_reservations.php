@@ -1,6 +1,7 @@
 <?php
 // 1. Veritabanı bağlantısı ve oturum kontrolü
-include '../config/db.php'; 
+include '../config/db.php';
+/** @var mysqli $conn */ 
 include '../check_login.php'; 
 
 // Sadece adminlerin girmesine izin veriyoruz
@@ -64,8 +65,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
             transition: 0.3s;
         }
         .approve { color: #2ed573; }
+        .edit { color: #3498db; } /* YENİ: Düzenle butonu rengi */
         .delete { color: #ff4757; }
-        .approve:hover, .delete:hover { background: #f0f0f0; }
+        .approve:hover, .edit:hover, .delete:hover { background: #f0f0f0; }
 
         /* Navbar düzenlemesi */
         .admin-nav {
@@ -129,10 +131,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                     echo "<td>".$row['user_phone']."</td>";
                     echo "<td>".$row['reservation_date']." <br> <small style='color:#888'>".$row['reservation_time']."</small></td>";
                     echo "<td>".$row['number_of_people']." Kişi</td>";
-                    echo "<td style='max-width: 200px; font-size: 0.85rem; color: #666;'>".$row['user_description']."</td>";
+                    echo "<td style='max-width: 200px; font-size: 0.85rem; color: #666;'>".htmlspecialchars($row['user_description'])."</td>";
                     echo "<td><span class='status-badge $status_class'>".$row['status']."</span></td>";
                     echo "<td>
                             <a href='approve_res.php?id=".$row['reservation_id']."' class='action-btn approve'>Onayla</a>
+                            <span style='color: #ddd'>|</span>
+                            <a href='update_reservation.php?id=".$row['reservation_id']."' class='action-btn edit'>Düzenle</a>
                             <span style='color: #ddd'>|</span>
                             <a href='delete_res.php?id=".$row['reservation_id']."' class='action-btn delete' onclick='return confirm(\"Silmek istediğine emin misin?\")'>Sil</a>
                           </td>";
