@@ -20,13 +20,24 @@ include 'includes/header.php';
 
             if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)) {
+                    // Resim yolu kontrolü: Boşsa default görseli yapıştırıyoruz
+                    $img_src = !empty($row['image_url']) ? 'images/' . $row['image_url'] : 'images/default-food.png';
                     ?>
-                    <div class="food-card">
-                        <div class="food-image-placeholder">🍽️</div> <div style="padding: 20px;">
-                            <h3 style="color: #2c3e50;"><?php echo $row['product_name']; ?></h3>
-                            <p style="color: #777; font-size: 0.9rem; margin: 10px 0; min-height: 40px;">
-                                <?php echo $row['description']; ?>
-                            </p>
+                    <div class="food-card" style="display: flex; flex-direction: column; overflow: hidden; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        
+                        <div class="food-image-container" style="width: 100%; height: 200px; background: #eee; overflow: hidden;">
+                            <img src="<?php echo htmlspecialchars($img_src); ?>" 
+                                 alt="<?php echo htmlspecialchars($row['product_name']); ?>" 
+                                 style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h3 style="color: #2c3e50; margin: 0;"><?php echo htmlspecialchars($row['product_name']); ?></h3>
+                                <p style="color: #777; font-size: 0.9rem; margin: 10px 0; min-height: 40px;">
+                                    <?php echo htmlspecialchars($row['description']); ?>
+                                </p>
+                            </div>
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
                                 <span style="font-weight: bold; font-size: 1.2rem; color: #333;">
@@ -43,7 +54,7 @@ include 'includes/header.php';
                     <?php
                 }
             } else {
-                echo "<p style='text-align:center;'>The menu is still empty.</p>";
+                echo "<p style='text-align:center; width: 100%;'>The menu is still empty.</p>";
             }
             ?>
         </div>

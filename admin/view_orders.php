@@ -28,9 +28,10 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 }
 
 // --- DATABASE SQL QUERY ---
-// u.name sütunu tam olarak Efe'nin veritabanıyla eşleştirildi!
+// Hem ürün isimlerini hem de resim yollarını birlikte çekiyoruz!
 $sql = "SELECT o.order_id, u.name AS customer_name, o.total_price, o.order_status,
-               GROUP_CONCAT(CONCAT(oi.quantity, 'x ', m.product_name) SEPARATOR ', ') AS urunler
+               GROUP_CONCAT(CONCAT(oi.quantity, 'x ', m.product_name) SEPARATOR '||') AS urunler,
+               GROUP_CONCAT(IFNULL(m.image_url, 'default-food.png') SEPARATOR '||') AS urun_resimleri
         FROM orders o 
         JOIN users u ON o.user_id = u.user_id 
         JOIN order_items oi ON o.order_id = oi.order_id
@@ -64,6 +65,14 @@ $result = mysqli_query($conn, $sql);
         td { padding: 15px 20px; border-bottom: 1px solid #eee; font-size: 0.95rem; vertical-align: middle; }
         tr:hover { background-color: #f8f9fa; }
         
+        /* Items Wrapper Styling */
+        .order-items-wrapper { display: flex; flex-direction: column; gap: 8px; }
+        .order-item-row { display: flex; align-items: center; gap: 10px; }
+        .admin-product-img {
+            width: 35px; height: 35px; border-radius: 6px; object-fit: cover;
+            border: 1px solid #ddd; background: #eee;
+        }
+
         /* Status Badges */
         .status-badge {
             padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
@@ -124,11 +133,28 @@ $result = mysqli_query($conn, $sql);
                             $status_class = 'status-completed';
                             $display_status = 'Delivered';
                         }
+
+                        // Resimleri ve ürün adlarını dizilere bölüyoruz
+                        $urunler_arr = explode('||', $row['urunler']);
+                        $resimler_arr = explode('||', $row['urun_resimleri']);
                     ?>
                     <tr>
                         <td><strong>#<?php echo $row['order_id']; ?></strong></td>
                         <td><?php echo htmlspecialchars($row['customer_name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['urunler']); ?></td>
+                        <td>
+                            <div class="order-items-wrapper">
+                                <?php foreach ($urunler_arr as $index => $urun_adi): 
+                                    // Admin paneli alt klasörde (admin/) olduğu için bir üst klasöre çıkıp images'a erişiyoruz (../images/)
+                                    $img_name = isset($resimler_arr[$index]) && !empty($resimler_arr[$index]) ? $resimler_arr[$index] : 'default-food.png';
+                                    $img_src = '../images/' . $img_name;
+                                ?>
+                                    <div class="order-item-row">
+                                        <img src="<?php echo htmlspecialchars($img_src); ?>" class="admin-product-img" alt="food">
+                                        <span><?php echo htmlspecialchars($urun_adi); ?></span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </td>
                         <td style="color: #2e7d32; font-weight: 600;"><?php echo $row['total_price']; ?> TL</td>
                         <td>
                             <span class="status-badge <?php echo $status_class; ?>">
