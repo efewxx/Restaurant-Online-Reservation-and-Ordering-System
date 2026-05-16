@@ -3,48 +3,47 @@ include 'config/db.php';
 include 'check_login.php'; 
 /** @var mysqli $conn */
 
-// --- VERİTABANINA SİPARİŞİ KAYDETME MOTORU ---
+// --- ORDER COMPLETION MOTOR ---
 if (isset($_POST['complete_order'])) {
     $user_id = $_SESSION['user_id'];
     $total_price = mysqli_real_escape_string($conn, $_POST['total_price']);
-    $order_status = 'Hazırlanıyor'; // Varsayılan durum
+    $order_status = 'Hazırlanıyor'; // Arka plandaki Türkçe motor bozulmuyor
 
     if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-        // 1. ADIM: Ana siparişi 'orders' tablosuna ekle
+        // STEP 1: Insert the main order info into 'orders' table
         $sql_order = "INSERT INTO orders (user_id, total_price, order_status) VALUES ('$user_id', '$total_price', '$order_status')";
         
         if (mysqli_query($conn, $sql_order)) {
-            // En son eklenen siparişin otomatik artan benzersiz ID'sini alıyoruz
+            // Get the unique ID of the newly inserted order
             $new_order_id = mysqli_insert_id($conn);
 
-            // 2. ADIM: Sepetteki ürünleri 'order_items' tablosuna tek tek döngüyle ekle
+            // STEP 2: Loop through items in cart and insert into 'order_items'
             foreach ($_SESSION['cart'] as $id) {
-                // Fiyat bilgisini çekmek için menü tablosuna sorgu atıyoruz
                 $sql_menu = "SELECT Price FROM menu WHERE product_id = $id";
                 $res_menu = mysqli_query($conn, $sql_menu);
                 $menu_item = mysqli_fetch_assoc($res_menu);
                 $unit_price = $menu_item['Price'];
-                $quantity = 1; // Şimdilik varsayılan miktar 1
+                $quantity = 1; 
 
                 $sql_item = "INSERT INTO order_items (order_id, product_id, quantity, unit_price) 
                              VALUES ('$new_order_id', '$id', '$quantity', '$unit_price')";
                 mysqli_query($conn, $sql_item);
             }
 
-            // 3. ADIM: Sipariş tamamlandıktan sonra sepeti boşalt
+            // STEP 3: Clear the cart after order is successfully placed
             unset($_SESSION['cart']);
 
-            // Şık bir bildirim verip ana sayfaya yönlendir
+            // Elegant browser alert and redirect in English
             echo "<script>
-                    alert('Siparişiniz başarıyla alındı! Şefimiz hazırlamaya başladı. 👨‍🍳🍽️');
+                    alert('Your order has been successfully placed! Our chef has started preparing your meal. 👨‍🍳🍽️');
                     window.location.href = 'index.php';
                   </script>";
             exit();
         } else {
-            echo "<script>alert('Veritabanı hatası: " . mysqli_error($conn) . "');</script>";
+            echo "<script>alert('Database Error: " . mysqli_error($conn) . "');</script>";
         }
     } else {
-        echo "<script>alert('Sepetiniz boş olduğu için sipariş tamamlanamadı.');</script>";
+        echo "<script>alert('Your cart is empty. Order could not be completed.');</script>";
     }
 }
 
@@ -62,8 +61,15 @@ include 'includes/header.php';
     
     .order-table { width: 100%; border-collapse: collapse; text-align: left; margin-bottom: 25px; }
     .order-table th { background-color: #2c3e50; color: #fff; padding: 12px 15px; font-weight: 500; }
-    .order-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+    .order-table td { padding: 12px 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
     .order-table tr:hover { background-color: #f8f9fa; }
+    
+    /* Image and Layout Rules */
+    .product-img {
+        width: 60px; height: 60px; border-radius: 8px; object-fit: cover; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: #eee;
+    }
+    .product-cell { display: flex; align-items: center; gap: 15px; }
     
     .total-row { background: #f1f2f6; font-weight: 600; font-size: 1.1rem; }
     .total-price-text { color: #2e7d32; font-weight: bold; }
@@ -77,13 +83,13 @@ include 'includes/header.php';
 </style>
 
 <div class="order-container">
-    <h1>🛒 Sipariş Özetiniz</h1>
+    <h1>🛒 Order Summary</h1>
     
     <table class="order-table">
         <thead>
             <tr>
-                <th>Ürün Adı</th>
-                <th style="text-align: right;">Fiyat</th>
+                <th>Product</th>
+                <th style="text-align: right;">Price</th>
             </tr>
         </thead>
         <tbody>
@@ -96,19 +102,27 @@ include 'includes/header.php';
                     $item = mysqli_fetch_assoc($res);
                     
                     if ($item) {
+                        // Eğer image_url doluysa doğrudan 'images/' klasöründen çağırıyoruz. Boşsa default görsel basıyoruz.
+                        $img_src = !empty($item['image_url']) ? 'images/' . $item['image_url'] : 'images/default-food.png';
+                        
                         echo "<tr>";
-                        echo "<td>" . htmlspecialchars($item['product_name']) . "</td>";
+                        echo "<td>";
+                        echo "  <div class='product-cell'>";
+                        echo "      <img src='" . htmlspecialchars($img_src) . "' class='product-img' alt='food'>";
+                        echo "      <span>" . htmlspecialchars($item['product_name']) . "</span>";
+                        echo "  </div>";
+                        echo "</td>";
                         echo "<td style='text-align: right; font-weight: 500;'>" . $item['Price'] . " TL</td>";
                         echo "</tr>";
                         $total += $item['Price'];
                     }
                 }
             } else {
-                echo "<tr><td colspan='2' style='text-align: center; color: #999; padding: 20px;'>Sepetiniz şu anda boş.</td></tr>";
+                echo "<tr><td colspan='2' style='text-align: center; color: #999; padding: 20px;'>Your cart is currently empty.</td></tr>";
             }
             ?>
             <tr class="total-row">
-                <td>TOPLAM TUTAR</td>
+                <td>TOTAL AMOUNT</td>
                 <td style="text-align: right;" class="total-price-text"><?php echo $total; ?> TL</td>
             </tr>
         </tbody>
@@ -118,7 +132,7 @@ include 'includes/header.php';
         <form action="order_summary.php" method="POST">
             <input type="hidden" name="total_price" value="<?php echo $total; ?>">
             <button type="submit" name="complete_order" class="complete-btn">
-                Siparişi Tamamla ve Onayla
+                Complete & Confirm Order
             </button>
         </form>
     <?php endif; ?>
