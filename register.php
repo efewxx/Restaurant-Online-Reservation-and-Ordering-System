@@ -9,6 +9,7 @@ if (isset($_POST['signup'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $conf_pass = $_POST['confirmpassword'];
+    $role = isset($_POST['role']) ? $_POST['role'] : 'user';
 
     // Şifreler eşleşiyor mu kontrolü
     if ($password !== $conf_pass) {
@@ -16,7 +17,8 @@ if (isset($_POST['signup'])) {
     } else {
         // Şifreyi güvenli hale getiriyoruz
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $role = 'user'; // Varsayılan rol
+
+        
 
         // 2. ADIM: Veritabanına kayıt (Efe'nin tablo isimlerine dikkat!)
         $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$hashed_password', '$role')";
@@ -64,6 +66,13 @@ if (isset($_POST['signup'])) {
                 <div class="input-group">
                     <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
                 </div>
+                
+                <div class="form-group">
+    <select name="role" class="form-control" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 20px; border: 1px solid #ccc;">
+        <option value="user">Customer (User)</option>
+        <option value="admin">Manager (Admin)</option>
+    </select>
+</div>
                 <input type="submit" name="signup" value="SIGN UP" class="btn">
                 <p class="switch-text">Already have an account? <a href="login.php">Login Here</a></p>
             </form>
