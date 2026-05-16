@@ -42,7 +42,7 @@
 <body>
 
 <nav class="main-nav">
-    <a href="index.php" class="nav-brand"><span>🍴 RESTORAN</span></a>
+    <a href="index.php" class="nav-brand"><span>🍴 MILOS</span></a>
     <div class="nav-links-container">
         <a href="index.php">Ana Sayfa</a>
         <a href="make_reservation.php">Rezervasyon Yap</a>

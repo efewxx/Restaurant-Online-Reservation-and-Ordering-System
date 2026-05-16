@@ -8,16 +8,16 @@
 <body>
 <nav style="background: #333; color: #fff; padding: 15px;">
     <a href="index.php" class="nav-brand">
-        <span>🍴 RESTORAN</span>
+        <span><img src="./images/milos_logo.png" alt="" style = "width: 20px;"> MILOS</span>
     </a>
-    <a href="index.php" style="color:white; margin-right:20px;">Menü</a>
-    <a href="reservation.php" style="color:white; margin-right:20px;">Rezervasyon Yap</a>
-    <a href="order_summary.php" style="color:white; margin-right:20px;">Siparişlerim</a>
+    <a href="index.php" style="color:white; margin-right:30px;">Menü</a>
+    <a href="reservation.php" style="color:white; margin-right:30px;">Rezervasyon Yap</a>
+    <a href="order_summary.php" style="color:white; margin-right:30px;">Siparişlerim</a>
     
     <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
     <a href="admin/dashboard.php" style="color: #4db8ff; font-weight: 600;">Admin Paneli</a>
 <?php endif; ?>
     
     <a href="logout.php" style="color:red; float:right;">Çıkış Yap</a>
-    <span style="float:right; margin-right:15px;">Hoş geldin, <?php echo $_SESSION['name']; ?></span>
+    <span style="float:right; margin-right:15px;">Welcome, <?php echo $_SESSION['name']; ?></span>
 </nav>
