@@ -16,7 +16,7 @@
     margin-bottom: 10px;
 }
 
-/* Kartların Izgara Düzeni (Grid) */
+/* Kartların Izgara Düzeni */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -49,7 +49,7 @@
 .menu-card-info p {
     color: #666;
     font-size: 0.9rem;
-    height: 40px; /* Açıklamaların hizalı durması için */
+    height: 40px; 
     overflow: hidden;
 }
 

@@ -3,13 +3,13 @@ session_start();
 include __DIR__ . '/../config/db.php';
 /** @var mysqli $conn */
 
-// Security Check
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
 
-// --- ORDER STATUS UPDATE ENGINE ---
+
 if (isset($_GET['action']) && isset($_GET['id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
     $action = mysqli_real_escape_string($conn, $_GET['action']);
@@ -27,8 +27,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
     }
 }
 
-// --- DATABASE SQL QUERY ---
-// Hem ürün isimlerini hem de resim yollarını birlikte çekiyoruz!
+
 $sql = "SELECT o.order_id, u.name AS customer_name, o.total_price, o.order_status,
                GROUP_CONCAT(CONCAT(oi.quantity, 'x ', m.product_name) SEPARATOR '||') AS urunler,
                GROUP_CONCAT(IFNULL(m.image_url, 'default-food.png') SEPARATOR '||') AS urun_resimleri
@@ -65,7 +64,7 @@ $result = mysqli_query($conn, $sql);
         td { padding: 15px 20px; border-bottom: 1px solid #eee; font-size: 0.95rem; vertical-align: middle; }
         tr:hover { background-color: #f8f9fa; }
         
-        /* Items Wrapper Styling */
+        
         .order-items-wrapper { display: flex; flex-direction: column; gap: 8px; }
         .order-item-row { display: flex; align-items: center; gap: 10px; }
         .admin-product-img {
@@ -73,7 +72,7 @@ $result = mysqli_query($conn, $sql);
             border: 1px solid #ddd; background: #eee;
         }
 
-        /* Status Badges */
+       
         .status-badge {
             padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
             display: inline-block; text-align: center; min-width: 110px;
@@ -82,7 +81,7 @@ $result = mysqli_query($conn, $sql);
         .status-shipping { background-color: #81ecec; color: #0984e3; } 
         .status-completed { background-color: #55efc4; color: #00b894; } 
 
-        /* Action Buttons */
+       
         .action-btn {
             padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
             text-decoration: none; color: white; display: inline-block; margin-right: 5px;
@@ -122,7 +121,6 @@ $result = mysqli_query($conn, $sql);
             <tbody>
                 <?php if ($result && mysqli_num_rows($result) > 0): ?>
                     <?php while ($row = mysqli_fetch_assoc($result)): 
-                        // Translation and CSS selection based on DB value
                         $status_class = 'status-pending';
                         $display_status = 'Preparing';
                         
@@ -134,7 +132,7 @@ $result = mysqli_query($conn, $sql);
                             $display_status = 'Delivered';
                         }
 
-                        // Resimleri ve ürün adlarını dizilere bölüyoruz
+                        
                         $urunler_arr = explode('||', $row['urunler']);
                         $resimler_arr = explode('||', $row['urun_resimleri']);
                     ?>
@@ -144,7 +142,7 @@ $result = mysqli_query($conn, $sql);
                         <td>
                             <div class="order-items-wrapper">
                                 <?php foreach ($urunler_arr as $index => $urun_adi): 
-                                    // Admin paneli alt klasörde (admin/) olduğu için bir üst klasöre çıkıp images'a erişiyoruz (../images/)
+                                   
                                     $img_name = isset($resimler_arr[$index]) && !empty($resimler_arr[$index]) ? $resimler_arr[$index] : 'default-food.png';
                                     $img_src = '../images/' . $img_name;
                                 ?>

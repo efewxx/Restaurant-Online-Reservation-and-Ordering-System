@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// ÜRÜN SİLME İŞLEMİ (Güvenli ID filtresi eklendi)
+
 if (isset($_GET['delete_id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['delete_id']);
     $delete_sql = "DELETE FROM menu WHERE product_id = $id";
@@ -18,7 +18,7 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// TÜM ÜRÜNLERİ ÇEK
+
 $sql = "SELECT m.*, c.category_name FROM menu m 
         JOIN categories c ON m.category_id = c.category_id
         ORDER BY m.product_id DESC";
@@ -32,7 +32,7 @@ $result = mysqli_query($conn, $sql);
     <title>Menu Management | Admin</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        /* CSS dosyanıza ek yük getirmemesi için butonların yan yana şık durmasını sağlıyoruz */
+       
         .action-links { display: flex; justify-content: center; gap: 8px; }
         .btn-update { background-color: #3498db; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 500; }
         .btn-update:hover { background-color: #2980b9; }

@@ -2,7 +2,7 @@
 include 'check_login.php';
 include 'config/db.php'; 
 
-// --- ARISH'İN MOTOR KISMI ---
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date        = mysqli_real_escape_string($conn, $_POST['res_date']);
     $time        = mysqli_real_escape_string($conn, $_POST['res_time']);
@@ -24,35 +24,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Tasarımı düzeltmek için ana header'ı çağırıyoruz
+
 include 'includes/header.php'; 
 ?>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Form elementini seç (Formunun id'si farklıysa burayı güncelle kanka)
+    
     const resForm = document.querySelector("form");
     
     if (resForm) {
-        // Bugünün tarihini al (YYYY-MM-DD formatında)
+        
         const today = new Date().toISOString().split('T')[0];
         
-        // Tarih inputunu bul ve geçmiş tarihleri seçmeyi engelle
+        
         const dateInput = resForm.querySelector("input[type='date']");
         if (dateInput) {
             dateInput.setAttribute("min", today);
         }
 
-        // Form gönderilirken telefon kontrolü yap
+        
         resForm.addEventListener("submit", function (e) {
             const phoneInput = resForm.querySelector("input[type='tel']") || resForm.querySelector("input[name*='phone']");
             
             if (phoneInput) {
                 const phoneValue = phoneInput.value.trim();
-                // Basit bir uzunluk kontrolü (Örn: Kıbrıs veya TR numaraları için en az 10 hane)
+                
                 if (phoneValue.length < 10) {
-                    e.preventDefault(); // Formun gönderilmesini durdur
-                    alert("Lütfen geçerli ve en az 10 haneli bir telefon numarası giriniz! 📱");
+                    e.preventDefault(); 
+                    alert("Please enter a valid phone number that is at least 10 digits long! 📱");
                     phoneInput.focus();
                 }
             }
@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
         <form action="reservation.php" method="POST">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                 <div>
-                    <label style="display:block; margin-bottom:5px; font-weight:600;">Ad</label>
+                    <label style="display:block; margin-bottom:5px; font-weight:600;">Name</label>
                     <input type="text" name="usr_name" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px;" placeholder="Your name" required>
                 </div>
                 <div>
-                    <label style="display:block; margin-bottom:5px; font-weight:600;">Soyad</label>
+                    <label style="display:block; margin-bottom:5px; font-weight:600;">Surname</label>
                     <input type="text" name="usr_surname" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px;" placeholder="Your surname" required>
                 </div>
             </div>
