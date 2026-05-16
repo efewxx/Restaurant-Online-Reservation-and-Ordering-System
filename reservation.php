@@ -28,6 +28,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include 'includes/header.php'; 
 ?>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Form elementini seç (Formunun id'si farklıysa burayı güncelle kanka)
+    const resForm = document.querySelector("form");
+    
+    if (resForm) {
+        // Bugünün tarihini al (YYYY-MM-DD formatında)
+        const today = new Date().toISOString().split('T')[0];
+        
+        // Tarih inputunu bul ve geçmiş tarihleri seçmeyi engelle
+        const dateInput = resForm.querySelector("input[type='date']");
+        if (dateInput) {
+            dateInput.setAttribute("min", today);
+        }
+
+        // Form gönderilirken telefon kontrolü yap
+        resForm.addEventListener("submit", function (e) {
+            const phoneInput = resForm.querySelector("input[type='tel']") || resForm.querySelector("input[name*='phone']");
+            
+            if (phoneInput) {
+                const phoneValue = phoneInput.value.trim();
+                // Basit bir uzunluk kontrolü (Örn: Kıbrıs veya TR numaraları için en az 10 hane)
+                if (phoneValue.length < 10) {
+                    e.preventDefault(); // Formun gönderilmesini durdur
+                    alert("Lütfen geçerli ve en az 10 haneli bir telefon numarası giriniz! 📱");
+                    phoneInput.focus();
+                }
+            }
+        });
+    }
+});
+</script>
+
 <div style="background-color: #f8f9fa; padding: 60px 0; min-height: 90vh; font-family: 'Poppins', sans-serif;">
     <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
         

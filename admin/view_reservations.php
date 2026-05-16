@@ -18,6 +18,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <title>Gelen Rezervasyonlar - Admin Paneli</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -86,6 +87,34 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         }
     </style>
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault(); // Sayfanın hemen silme linkine gitmesini engelle
+            const targetUrl = this.getAttribute('href');
+
+            Swal.fire({
+                title: 'Emin misiniz?',
+                text: "Bu rezervasyon kaydı kalıcı olarak silinecektir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff4757',
+                cancelButtonColor: '#2c3e50',
+                confirmButtonText: 'Evet, Sil!',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Eğer onaylandıysa silme linkine yönlendir
+                    window.location.href = targetUrl;
+                }
+            });
+        });
+    });
+});
+</script>
 <body>
 
 <nav class="admin-nav">
@@ -138,7 +167,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                             <span style='color: #ddd'>|</span>
                             <a href='update_reservation.php?id=".$row['reservation_id']."' class='action-btn edit'>Düzenle</a>
                             <span style='color: #ddd'>|</span>
-                            <a href='delete_res.php?id=".$row['reservation_id']."' class='action-btn delete' onclick='return confirm(\"Silmek istediğine emin misin?\")'>Sil</a>
+                            <a href='delete_res.php?id=".$row['reservation_id']."' class='action-btn delete delete-btn'>Sil</a>
                           </td>";
                     echo "</tr>";
                 }
