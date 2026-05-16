@@ -11,7 +11,14 @@ include 'includes/header.php';
 
 <div class="menu-section">
     <div class="admin-container">
-        <h2 style="text-align: center; margin-bottom: 40px;">🍴 Our Delicious Menu</h2>
+        <h2 style="text-align: center; margin-bottom: 20px;">🍴 Our Delicious Menu</h2>
+        
+        <div class="category-filters" style="text-align: center; margin-bottom: 40px;">
+            <button class="filter-btn active" data-filter="all" style="padding: 10px 22px; margin: 5px; border-radius: 25px; border: 1px solid #ff9800; background: #ff9800; color: white; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">All</button>
+            <button class="filter-btn" data-filter="1" style="padding: 10px 22px; margin: 5px; border-radius: 25px; border: 1px solid #ccc; background: white; color: #333; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Meals</button>
+            <button class="filter-btn" data-filter="2" style="padding: 10px 22px; margin: 5px; border-radius: 25px; border: 1px solid #ccc; background: white; color: #333; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Drinks</button>
+            <button class="filter-btn" data-filter="3" style="padding: 10px 22px; margin: 5px; border-radius: 25px; border: 1px solid #ccc; background: white; color: #333; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Desserts</button>
+        </div>
         
         <div class="dashboard-grid">
             <?php
@@ -20,10 +27,9 @@ include 'includes/header.php';
 
             if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)) {
-                    // Resim yolu kontrolü: Boşsa default görseli yapıştırıyoruz
                     $img_src = !empty($row['image_url']) ? 'images/' . $row['image_url'] : 'images/default-food.png';
                     ?>
-                    <div class="food-card" style="display: flex; flex-direction: column; overflow: hidden; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div class="food-card" data-category="<?php echo htmlspecialchars($row['category_id']); ?>" style="display: flex; flex-direction: column; overflow: hidden; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease, opacity 0.3s ease;">
                         
                         <div class="food-image-container" style="width: 100%; height: 200px; background: #eee; overflow: hidden;">
                             <img src="<?php echo htmlspecialchars($img_src); ?>" 
@@ -60,5 +66,43 @@ include 'includes/header.php';
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const foodCards = document.querySelectorAll('.food-card');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Aktif buton rengini değiştirme şovu
+            filterButtons.forEach(btn => {
+                btn.style.background = 'white';
+                btn.style.color = '#333';
+                btn.style.borderColor = '#ccc';
+            });
+            this.style.background = '#ff9800';
+            this.style.color = 'white';
+            this.style.borderColor = '#ff9800';
+
+            const filterValue = this.getAttribute('data-filter');
+
+            foodCards.forEach(card => {
+                if (filterValue === 'all') {
+                    card.style.display = 'flex';
+                    setTimeout(() => { card.style.opacity = '1'; }, 10);
+                } else {
+                    if (card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { card.style.opacity = '1'; }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>

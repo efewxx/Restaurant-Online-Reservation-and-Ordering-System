@@ -73,8 +73,13 @@ INSERT IGNORE INTO users (name, email, password, role) VALUES
 
 INSERT IGNORE INTO categories (category_name) VALUES ('main courses'), ('Drinks'), ('Desserts');
 
-INSERT INTO menu (product_name, Price, description, category_id, user_id) VALUES
-('Meatballs', 450.00, 'Delicious meatballs with special sauce', 1, (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
-('Ayran', 50.00, 'A refreshing, traditional Turkish drink made of chilled yogurt, water, and a pinch of salt.', 2, (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
-('Traditional Baklava', 250.00, 'Crispy, golden layers of phyllo pastry packed with crushed pistachios and drenched in a light, fragrant sweet syrup.', 3, (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
+-- Eğer üstteki adımlar işe yaramazsa, sadece bu sorguyu dene kanka:
+TRUNCATE TABLE menu;
 
+INSERT INTO menu (product_name, Price, description, category_id, user_id) VALUES
+
+('Meatballs', 450.00, 'Delicious meatballs with special sauce', 1, (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+
+('Ayran', 50.00, 'A refreshing, traditional Turkish drink made of chilled yogurt, water, and a pinch of salt.', 2, (SELECT user_id FROM users WHERE role='admin' LIMIT 1)),
+
+('Traditional Baklava', 250.00, 'Crispy, golden layers of phyllo pastry packed with crushed pistachios and drenched in a light, fragrant sweet syrup.', 3, (SELECT user_id FROM users WHERE role='admin' LIMIT 1));
