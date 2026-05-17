@@ -59,7 +59,11 @@ A modern web-based application that allows customers to reserve tables and order
 5. Open in your browser
 
 ## 📸 Screenshots
-*(Screenshots will be added here)*
+<img width="1090" height="337" alt="image" src="https://github.com/user-attachments/assets/86b67bb7-b14e-4189-ab00-df11ab479b77" />
+<img width="1095" height="687" alt="image" src="https://github.com/user-attachments/assets/60dcd857-57d0-40be-b9d0-50e7602431fc" />
+<img width="1090" height="552" alt="image" src="https://github.com/user-attachments/assets/0c5f4f4e-0c52-49c7-b355-5a913e515993" />
+
+
 
 ## 👤 Roles
 - **Customer**: Can register, reserve tables, and place orders
