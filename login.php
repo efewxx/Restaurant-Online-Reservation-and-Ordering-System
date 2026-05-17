@@ -4,25 +4,25 @@ include 'config/db.php';
 
 
 if (isset($_POST['login'])) {
-    // Formdan gelen veriler
+   
     $email = $_POST['email'];
     $pass = $_POST['password'];
 
-    // Efe'nin tablosuna göre: users tablosunda email üzerinden ara
+    
     $query = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
         
-        // password_verify: Girilen şifreyi veritabanındaki hashli şifre ile karşılaştırır
+        
         if (password_verify($pass, $user['password'])) {
-            // Giriş başarılı! Bilgileri session'a kaydediyoruz
-            $_SESSION['user_id'] = $user['user_id']; // Efe 'user_id' yapmış
+           
+            $_SESSION['user_id'] = $user['user_id']; 
             $_SESSION['role'] = $user['role'];
             $_SESSION['name'] = $user['name'];
 
-            // Role göre yönlendirme
+            
             if ($user['role'] == 'admin') {
                 header("Location: admin/dashboard.php");
             } else {
@@ -51,7 +51,7 @@ if (isset($_POST['login'])) {
     <div class="left-side">
         <div class="overlay">
             <h1>Welcome Back</h1>
-            <p>Continue enjoying delicious moments from where you left off..</p>
+            <p>Continue enjoying delicious moments from where you left off.</p>
         </div>
         <img src="./images/restaurantview.gif" alt="Restaurant GIF">
     </div>

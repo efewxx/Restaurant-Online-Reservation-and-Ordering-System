@@ -1,32 +1,31 @@
 <?php
-// 1. ADIM: Efe'nin hazırladığı veritabanı bağlantısını çağırıyoruz
 include 'config/db.php'; 
 
 
 if (isset($_POST['signup'])) {
-    // Formdan gelen verileri alıyoruz
+   
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $conf_pass = $_POST['confirmpassword'];
     $role = isset($_POST['role']) ? $_POST['role'] : 'user';
 
-    // Şifreler eşleşiyor mu kontrolü
+    
     if ($password !== $conf_pass) {
         echo "<script>alert('The passwords don't match!');</script>";
     } else {
-        // Şifreyi güvenli hale getiriyoruz
+        
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         
 
-        // 2. ADIM: Veritabanına kayıt (Efe'nin tablo isimlerine dikkat!)
+        
         $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$hashed_password', '$role')";
         
         if (mysqli_query($conn, $sql)) {
             echo "<script>alert('Registration successful!'); window.location.href='login.php';</script>";
         } else {
-            echo "Hata: " . mysqli_error($conn);
+            echo "Error: " . mysqli_error($conn);
         }
     }
 }
@@ -45,7 +44,7 @@ if (isset($_POST['signup'])) {
     <div class="left-side">
         <div class="overlay">
             <h1>Join Us</h1>
-            <p>Register with our restaurant system and enjoy the privileges..</p>
+            <p>Register with our restaurant system and enjoy the privileges.</p>
         </div>
         <img src="./images/restaurantview.gif" alt="Restaurant GIF">
     </div>

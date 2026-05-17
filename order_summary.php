@@ -3,21 +3,21 @@ include 'config/db.php';
 include 'check_login.php'; 
 /** @var mysqli $conn */
 
-// --- ORDER COMPLETION MOTOR ---
+
 if (isset($_POST['complete_order'])) {
     $user_id = $_SESSION['user_id'];
     $total_price = mysqli_real_escape_string($conn, $_POST['total_price']);
-    $order_status = 'Hazırlanıyor'; // Arka plandaki Türkçe motor bozulmuyor
+    $order_status = 'On The Way'; 
 
     if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-        // STEP 1: Insert the main order info into 'orders' table
+       
         $sql_order = "INSERT INTO orders (user_id, total_price, order_status) VALUES ('$user_id', '$total_price', '$order_status')";
         
         if (mysqli_query($conn, $sql_order)) {
-            // Get the unique ID of the newly inserted order
+           
             $new_order_id = mysqli_insert_id($conn);
 
-            // STEP 2: Loop through items in cart and insert into 'order_items'
+            
             foreach ($_SESSION['cart'] as $id) {
                 $sql_menu = "SELECT Price FROM menu WHERE product_id = $id";
                 $res_menu = mysqli_query($conn, $sql_menu);
@@ -30,10 +30,10 @@ if (isset($_POST['complete_order'])) {
                 mysqli_query($conn, $sql_item);
             }
 
-            // STEP 3: Clear the cart after order is successfully placed
+            
             unset($_SESSION['cart']);
 
-            // Elegant browser alert and redirect in English
+            
             echo "<script>
                     alert('Your order has been successfully placed! Our chef has started preparing your meal. 👨‍🍳🍽️');
                     window.location.href = 'index.php';
@@ -64,7 +64,7 @@ include 'includes/header.php';
     .order-table td { padding: 12px 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
     .order-table tr:hover { background-color: #f8f9fa; }
     
-    /* Image and Layout Rules */
+    
     .product-img {
         width: 60px; height: 60px; border-radius: 8px; object-fit: cover; 
         box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: #eee;
@@ -102,7 +102,7 @@ include 'includes/header.php';
                     $item = mysqli_fetch_assoc($res);
                     
                     if ($item) {
-                        // Eğer image_url doluysa doğrudan 'images/' klasöründen çağırıyoruz. Boşsa default görsel basıyoruz.
+                       
                         $img_src = !empty($item['image_url']) ? 'images/' . $item['image_url'] : 'images/default-food.png';
                         
                         echo "<tr>";

@@ -1,5 +1,5 @@
 function validateRegister() {
-    // Formdaki inputları ID'lerine göre yakalıyoruz
+   
     let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
     let pass = document.getElementById('password').value;
@@ -7,7 +7,7 @@ function validateRegister() {
 
     if (name == "" || email == "" || pass == "" || confPass == "") {
         alert("Please fill in all the fields!");
-        return false; // Formun PHP'ye gitmesini durdurur
+        return false; 
     }
 
     if (pass.length < 6) {
@@ -15,5 +15,5 @@ function validateRegister() {
         return false;
     }
 
-    return true; // Her şey yolundaysa formu gönderir
+    return true; 
 }

@@ -3,11 +3,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif; /* Modern ve temiz bir font */
+    font-family: 'Poppins', sans-serif; 
 }
 
 body {
-    background-color: #f8f9fa; /* Hafif gri, göz yormayan arka plan */
+    background-color: #f8f9fa; 
     color: #333;
     line-height: 1.6;
 }
@@ -32,7 +32,7 @@ body {
 }
 
 .admin-navbar a:hover {
-    color: #ff9800; /* Arish'in turuncusu */
+    color: #ff9800; 
 }
 
 /* KONTEYNER */
@@ -194,7 +194,7 @@ tr:hover {
 
 /* Ana Navigasyon Barı */
 .main-nav {
-    background-color: #2c3e50; /* Koyu modern gri/mavi */
+    background-color: #2c3e50; 
     padding: 15px 5%;
     display: flex;
     justify-content: space-between;
@@ -205,7 +205,7 @@ tr:hover {
 .nav-brand {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ff9800 !important; /* Marka rengi Turuncu */
+    color: #ff9800 !important;
     text-decoration: none;
     display: flex;
     align-items: center;

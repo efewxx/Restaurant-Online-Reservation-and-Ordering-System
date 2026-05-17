@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masa Rezervasyonu | Lezzet Durağı</title>
+    <title>Table Reservation | MILOS</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Sadece rezervasyon sayfasına özel hızlı düzenleme */
+        
         body { background-color: #f8f9fa; font-family: 'Poppins', sans-serif; }
         .reservation-section {
             max-width: 600px;
@@ -26,7 +26,7 @@
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            box-sizing: border-box; /* Taşmaları önler */
+            box-sizing: border-box;
         }
         .reservation-section button {
             background-color: #ff9800;
@@ -44,8 +44,8 @@
 <nav class="main-nav">
     <a href="index.php" class="nav-brand"><span>🍴 MILOS</span></a>
     <div class="nav-links-container">
-        <a href="index.php">Ana Sayfa</a>
-        <a href="make_reservation.php">Rezervasyon Yap</a>
-        <a href="login.php" class="nav-auth-btn">Giriş / Kayıt</a>
+        <a href="index.php">Home Page</a>
+        <a href="make_reservation.php">Make a Reservation</a>
+        <a href="login.php" class="nav-auth-btn">Login / Register</a>
     </div>
 </nav>

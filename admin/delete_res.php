@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     if (mysqli_query($conn, $sql)) {
         header("Location: view_reservations.php?status=deleted");
     } else {
-        echo "Hata oluştu: " . mysqli_error($conn);
+        echo "An Error Has Occured: " . mysqli_error($conn);
     }
 }
 ?>

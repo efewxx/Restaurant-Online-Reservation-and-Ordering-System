@@ -1,21 +1,20 @@
 <?php
-// 1. Veritabanı bağlantısı ve oturum kontrolü
 include '../config/db.php';
 /** @var mysqli $conn */ 
 include '../check_login.php'; 
 
-// Sadece adminlerin girmesine izin veriyoruz
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
     exit();
 }
 ?>
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gelen Rezervasyonlar - Admin Paneli</title>
+    <title>Incoming Reservations - Admin Panel</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -66,11 +65,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
             transition: 0.3s;
         }
         .approve { color: #2ed573; }
-        .edit { color: #3498db; } /* YENİ: Düzenle butonu rengi */
+        .edit { color: #3498db; } 
         .delete { color: #ff4757; }
         .approve:hover, .edit:hover, .delete:hover { background: #f0f0f0; }
 
-        /* Navbar düzenlemesi */
+        
         .admin-nav {
             background: #2c3e50;
             padding: 15px 5%;
@@ -93,21 +92,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     deleteButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            e.preventDefault(); // Sayfanın hemen silme linkine gitmesini engelle
+            e.preventDefault(); 
             const targetUrl = this.getAttribute('href');
 
             Swal.fire({
-                title: 'Emin misiniz?',
-                text: "Bu rezervasyon kaydı kalıcı olarak silinecektir!",
+                title: 'Are you sure?',
+                text: "This reservation will be permanently deleted.!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#ff4757',
                 cancelButtonColor: '#2c3e50',
-                confirmButtonText: 'Evet, Sil!',
-                cancelButtonText: 'İptal'
+                confirmButtonText: 'Yes, Delete!',
+                cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Eğer onaylandıysa silme linkine yönlendir
+                    
                     window.location.href = targetUrl;
                 }
             });
@@ -121,32 +120,32 @@ document.addEventListener("DOMContentLoaded", function () {
     <div style="font-weight: 600; font-size: 1.2rem;">🍴 Restaurant Admin</div>
     <div>
         <a href="dashboard.php">Panel</a>
-        <a href="../index.php" target="_blank">Siteyi Gör</a>
-        <a href="../logout.php" style="color: #ff6b6b;">Çikiş Yap</a>
+        <a href="../index.php" target="_blank">View Site</a>
+        <a href="../logout.php" style="color: #ff6b6b;">Logout</a>
     </div>
 </nav>
 
 <div class="admin-container">
     <h2 style="color: #2c3e50; margin-bottom: 30px; display: flex; align-items: center;">
-        <span style="margin-right: 15px;">📅</span> Gelen Rezervasyonlar
+        <span style="margin-right: 15px;">📅</span> Incoming Reservations
     </h2>
 
     <table class="res-table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Müşteri Bilgileri</th>
-                <th>Telefon</th>
-                <th>Tarih / Saat</th>
-                <th>Kişi</th>
-                <th>Not</th>
-                <th>Durum</th>
-                <th>İşlemler</th>
+                <th>Customer Information</th>
+                <th>Telephone</th>
+                <th>Date / Time</th>
+                <th>People</th>
+                <th>Note</th>
+                <th>Status</th>
+                <th>Operations</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            // Rezervasyonları veritabanından çek (en yeni en üstte)
+            
             $sql = "SELECT * FROM reservation ORDER BY reservation_id DESC";
             $result = mysqli_query($conn, $sql);
 
@@ -163,16 +162,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     echo "<td style='max-width: 200px; font-size: 0.85rem; color: #666;'>".htmlspecialchars($row['user_description'])."</td>";
                     echo "<td><span class='status-badge $status_class'>".$row['status']."</span></td>";
                     echo "<td>
-                            <a href='approve_res.php?id=".$row['reservation_id']."' class='action-btn approve'>Onayla</a>
+                            <a href='approve_res.php?id=".$row['reservation_id']."' class='action-btn approve'>Approve</a>
                             <span style='color: #ddd'>|</span>
-                            <a href='update_reservation.php?id=".$row['reservation_id']."' class='action-btn edit'>Düzenle</a>
+                            <a href='update_reservation.php?id=".$row['reservation_id']."' class='action-btn edit'>Edit</a>
                             <span style='color: #ddd'>|</span>
-                            <a href='delete_res.php?id=".$row['reservation_id']."' class='action-btn delete delete-btn'>Sil</a>
+                            <a href='delete_res.php?id=".$row['reservation_id']."' class='action-btn delete delete-btn'>Delete</a>
                           </td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='8' style='text-align:center; padding: 30px;'>Henüz bir rezervasyon kaydı bulunamadı.</td></tr>";
+                echo "<tr><td colspan='8' style='text-align:center; padding: 30px;'>No reservation record found yet.</td></tr>";
             }
             ?>
         </tbody>

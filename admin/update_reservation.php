@@ -3,13 +3,13 @@ session_start();
 include __DIR__ . '/../config/db.php';
 /** @var mysqli $conn */
 
-// GÜVENLİK: Admin değilse giriş sayfasına postala
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
     exit();
 }
 
-// URL'den rezervasyon ID'si gelmiş mi?
+
 if (!isset($_GET['id'])) {
     header("Location: view_reservations.php");
     exit();
@@ -17,18 +17,18 @@ if (!isset($_GET['id'])) {
 
 $reservation_id = mysqli_real_escape_string($conn, $_GET['id']);
 
-// REZERVASYONUN MEVCUT BİLGİLERİNİ VERİTABANINDAN ÇEK
+
 $sql_get = "SELECT * FROM reservation WHERE reservation_id = '$reservation_id'";
 $res_get = mysqli_query($conn, $sql_get);
 $reservation = mysqli_fetch_assoc($res_get);
 
-// Eğer böyle bir rezervasyon yoksa listeye geri gönder
+
 if (!$reservation) {
     header("Location: view_reservations.php");
     exit();
 }
 
-// FORM POST EDİLDİĞİNDE GÜNCELLEME MOTORU OYUNA GİRER
+
 if (isset($_POST['update_reservation'])) {
     $res_date = mysqli_real_escape_string($conn, $_POST['r_date']);
     $res_time = mysqli_real_escape_string($conn, $_POST['r_time']);
@@ -36,7 +36,7 @@ if (isset($_POST['update_reservation'])) {
     $notes = mysqli_real_escape_string($conn, $_POST['r_notes']);
     $status = mysqli_real_escape_string($conn, $_POST['r_status']);
 
-    // UPDATE SORGUSU
+    
     $sql_update = "UPDATE reservation SET 
                     reservation_date = '$res_date', 
                     reservation_time = '$res_time', 
@@ -46,20 +46,20 @@ if (isset($_POST['update_reservation'])) {
                    WHERE reservation_id = '$reservation_id'";
 
     if (mysqli_query($conn, $sql_update)) {
-        echo "<script>alert('Rezervasyon başarıyla güncellendi! 📅✨'); window.location.href='view_reservations.php';</script>";
+        echo "<script>alert('Reservation updated successfully! 📅✨'); window.location.href='view_reservations.php';</script>";
         exit();
     } else {
-        echo "Güncelleme Hatası: " . mysqli_error($conn);
+        echo "Update Error: " . mysqli_error($conn);
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezervasyon Düzenle | Admin</title>
+    <title>Edit Reservation | Admin</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -106,49 +106,49 @@ if (isset($_POST['update_reservation'])) {
 </nav>
 
 <div class="form-container">
-    <h2>✏️ Rezervasyon Düzenle</h2>
+    <h2>✏️ Edit Reservation</h2>
     
     <form method="POST">
         
         <div class="form-group">
-            <label>Müşteri Adı Soyadı</label>
+            <label>Customer Name and Surname</label>
             <input type="text" class="form-control" value="<?php echo htmlspecialchars($reservation['user_name'] . ' ' . $reservation['user_surname']); ?>" disabled style="background-color: #eee; cursor: not-allowed;">
         </div>
 
         <div class="form-group">
-            <label>Müşteri Telefonu</label>
+            <label>Customer Phone</label>
             <input type="text" class="form-control" value="<?php echo htmlspecialchars($reservation['user_phone']); ?>" disabled style="background-color: #eee; cursor: not-allowed;">
         </div>
 
         <div class="form-group">
-            <label for="r_date">Rezervasyon Tarihi</label>
+            <label for="r_date">Reservation Date</label>
             <input type="date" id="r_date" name="r_date" class="form-control" value="<?php echo $reservation['reservation_date']; ?>" required>
         </div>
 
         <div class="form-group">
-            <label for="r_time">Rezervasyon Saati</label>
+            <label for="r_time">Reservation Time</label>
             <input type="time" id="r_time" name="r_time" class="form-control" value="<?php echo $reservation['reservation_time']; ?>" required>
         </div>
 
         <div class="form-group">
-            <label for="r_guests">Kişi Sayısı</label>
+            <label for="r_guests">Number of People</label>
             <input type="number" id="r_guests" name="r_guests" class="form-control" value="<?php echo $reservation['number_of_people']; ?>" min="1" required>
         </div>
 
         <div class="form-group">
-            <label for="r_notes">Müşteri Notu</label>
+            <label for="r_notes">Customer Note</label>
             <textarea id="r_notes" name="r_notes" class="form-control" rows="3"><?php echo htmlspecialchars($reservation['user_description']); ?></textarea>
         </div>
 
         <div class="form-group">
-            <label for="r_status">Onay Durumu</label>
+            <label for="r_status">Approval Status</label>
             <select id="r_status" name="r_status" class="form-control" required>
-                <option value="pending" <?php if($reservation['status'] == 'pending') echo 'selected'; ?>>pending (Beklemede)</option>
-                <option value="approved" <?php if($reservation['status'] == 'approved') echo 'selected'; ?>>approved (Onaylandı)</option>
+                <option value="pending" <?php if($reservation['status'] == 'pending') echo 'selected'; ?>>Pending</option>
+                <option value="approved" <?php if($reservation['status'] == 'approved') echo 'selected'; ?>>Approved</option>
             </select>
         </div>
 
-        <button type="submit" name="update_reservation" class="submit-btn">💾 Değişiklikleri Kaydet</button>
+        <button type="submit" name="update_reservation" class="submit-btn">💾 Save Changes</button>
     </form>
 </div>
 
