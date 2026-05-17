@@ -24,7 +24,7 @@ A modern web-based application that allows customers to reserve tables and order
 
 ## 🛠 Technologies Used
 - **Frontend**: HTML, CSS, JavaScript
-- **Backend**: PHP / Node.js (you can specify)
+- **Backend**: PHP
 - **Database**: MySQL
 - **Authentication**: Session or JWT based
 - **Validation**: JavaScript validation on forms
